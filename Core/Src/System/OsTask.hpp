@@ -15,7 +15,7 @@
 #include "..\Os\OsQueue.hpp"
 
 /**********************************************************************************/
-#define OS_TASK_SYS_SIZE_STACK  (configMINIMAL_STACK_SIZE*4)
+#define OS_TASK_SYS_SIZE_STACK  (configMINIMAL_STACK_SIZE * 4)
 
 ////// configMAX_PRIORITIES = 32. //////
 /*

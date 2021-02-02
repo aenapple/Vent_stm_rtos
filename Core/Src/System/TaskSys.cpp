@@ -101,7 +101,6 @@ void TTaskSys::SetEventAdcConvCpltFromISR(void)
 */
 void TTaskSys::Run(void)
 {
-	// bool toggleMotor;
 	// u32 counter;
 	// std::string str_counter;
 
@@ -111,40 +110,36 @@ void TTaskSys::Run(void)
 	while(true)
 	{
 
-		
-		this->Led.Led1_on();
-        this->Delay(1000);  // mSec
+		//this->Delay(1000);
+		//this->Led.Led1_on();
+        //this->Delay(10);
+        //this->Led.Led1_off();
+        //continue;
         
 		/*if(this->EventGroup.WaitAndBits(TASK_SYS_EVENT_5SECONDS, 1000) == OsResult_Timeout)
 		{
 			continue;
 		}*/
 
-
+        //this->tmpCounter1 = this->systemCounter;
+        this->Adc.TSensorOn();
 		this->Adc.Start();
         if(this->EventGroup.WaitAndBits(TASK_SYS_ADC_CONV_CPLT, 10) == OsResult_Timeout)
         {
-            Led.Led1_off();
+            Led.Led2_on();
+            this->Delay(10);
+            Led.Led2_off();
             this->Delay(500);
             continue;
         }
-
+        this->Adc.TSensorOff();
 
         //this->Delay(10);
         //this->ReadAdc();
-        Led.Led1_off();
+        //Led.Led1_off();
 
-        /*
-        this->tmpFloat[0] = this->Adc.ReadTP(this->valueSensor);
-        this->tmpFloat[1] = this->Adc.ReadVdda(this->valueSensor);
-        this->tmpFloat[2] = this->Adc.ReadVref(this->valueSensor);
-        this->tmpFloat[3] = this->Adc.ReadVin(this->valueSensor);
-        this->tmpFloat[4] = this->Adc.ReadT1(this->valueSensor);
-        this->tmpFloat[5] = this->Adc.ReadT2(this->valueSensor);
-        this->tmpFloat[6] = this->Adc.ReadT3(this->valueSensor);
-*/
-        
-        this->tmpFloat[0] = this->Adc.ReadTP();
+        //this->tmpCounter2 = this->systemCounter - this->tmpCounter1;
+        /*this->tmpFloat[0] = this->Adc.ReadTP();
         this->tmpFloat[1] = this->Adc.ReadVdda();
         this->tmpFloat[2] = this->Adc.ReadVref();
         this->tmpFloat[3] = this->Adc.ReadVin();
@@ -152,9 +147,34 @@ void TTaskSys::Run(void)
         this->tmpFloat[5] = this->Adc.ReadT2();
         this->tmpFloat[6] = this->Adc.ReadT3();
         
+        continue;*/
         
+        if(this->Adc.ReadVin() < 2.8)
+        {
+            this->Led.Led1_on();
+            this->Delay(10);
+            this->Led.Led1_off();
+            this->Delay(1000);
+            continue;
+        }
         
-        this->Delay(500);  // mSec
+        float curTemperature;
+        curTemperature = (this->Adc.ReadT1() + this->Adc.ReadT2() + this->Adc.ReadT3()) / 3;
+        if(curTemperature > this->prevTemperature)
+        {
+            if(this->prevTemperature < 1.0)  // ~ 23 C
+            {
+                this->Motor.Open();
+            }
+            else
+            {
+                this->Motor.Close();
+            }
+        }
+                
+        this->prevTemperature = curTemperature;
+        
+        //this->Delay(500);  // mSec
         
         
 		
@@ -181,7 +201,7 @@ void TTaskSys::Run(void)
 *  @return
 *  		none.
 */
-void TTaskSys::ReadAdc(void)
+/*void TTaskSys::ReadAdc(void)
 {
     u16 i;
 
@@ -190,7 +210,7 @@ void TTaskSys::ReadAdc(void)
         this->valueSensor[i]= this->resultAdc[i];
     }
 
-}
+}*/
 //=== end ReadAdc ==================================================================
 
 //==================================================================================
@@ -230,7 +250,9 @@ EOsResult TTaskSys::Init(void)
 	this->Adc.Init();
     this->Led.Init();
     
-    this->adcConvCounter = 0;
+    //this->adcConvCounter = 0;
+    this->prevTemperature = 1;  // ~23 C
+    this->Delay(10);
 
 
 	return(OsResult_Ok);

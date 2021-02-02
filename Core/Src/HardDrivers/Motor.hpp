@@ -42,7 +42,8 @@ protected:
 
 private:
     ////// variables //////
-
+    bool ventOpen;
+    
 
     ////// constants //////
 

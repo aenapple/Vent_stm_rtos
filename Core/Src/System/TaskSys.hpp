@@ -69,12 +69,14 @@ private:
     TMotor Motor;
     
     volatile u64 systemCounter;
-    volatile u8 adcConvCounter;
-    u16 resultAdc[ADC_NUMBER_OF_CHANNEL];
-    u16 valueSensor[ADC_NUMBER_OF_CHANNEL];
+    float prevTemperature;
+    //float curTemperature;
+    
     
     // DEBUG
     float tmpFloat[10];
+    volatile u64 tmpCounter1;
+    volatile u64 tmpCounter2;
     // DEBUG
 
 	
@@ -84,7 +86,7 @@ private:
 	////// functions //////
     
 	void Run(void);
-    void ReadAdc(void);
+    //void ReadAdc(void);
 	EOsResult DebugPrint(const char* format, ...);
 
     EOsResult Init(void);

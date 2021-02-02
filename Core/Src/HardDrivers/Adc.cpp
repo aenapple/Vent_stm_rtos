@@ -23,7 +23,7 @@ extern ADC_HandleTypeDef hadc;
 void TAdc::Init(void)
 {
     HAL_GPIO_WritePin(VIN_CONTROL_GPIO_Port, VIN_CONTROL_Pin, GPIO_PIN_RESET);
-    this->TSensorOn();
+    this->TSensorOff();
     this->Calibrate();
     this->convCounter = 0;
 }

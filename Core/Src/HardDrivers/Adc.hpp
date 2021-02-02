@@ -38,11 +38,11 @@
  */
 
 /*
-     19.6 / 23.06
-    TP - 22.41
-    T1 - 0.949
-    T2 - 0.960
-    T3 - 0.965
+          19.8/22.3 | 17.6/23.06
+    TP  |   22.408  |   20.45
+    T1  |   0.945   |   0.899
+    T2  |   0.956   |   0.909
+    T3  |   0.964   |   0.914
 */
 
 /*
@@ -96,7 +96,8 @@ public:
     float ReadT2(void);
     float ReadT3(u16*);
     float ReadT3(void);
-    
+    void TSensorOn(void);
+    void TSensorOff(void);
     
   
 protected:
@@ -122,8 +123,7 @@ private:
 
 	////// functions //////
     float ReadChannel(u16*, u16);
-    void TSensorOn(void);
-    void TSensorOff(void);
+    
 
 
 
