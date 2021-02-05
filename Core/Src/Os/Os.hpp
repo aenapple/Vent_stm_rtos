@@ -50,7 +50,10 @@ typedef enum
 	OsResult_WrongParameter,
       
     OsResult_AdcEndConversion,
-    OsResult_AdcStartConversion
+    OsResult_AdcStartConversion,
+    
+    OsResult_EepromUnlockError,
+    OsResult_EepromProgramError
 
 } EOsResult;
 

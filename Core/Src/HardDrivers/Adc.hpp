@@ -38,11 +38,11 @@
  */
 
 /*
-          19.8/22.3 | 17.6/23.06
-    TP  |   22.408  |   20.45
-    T1  |   0.945   |   0.899
-    T2  |   0.956   |   0.909
-    T3  |   0.964   |   0.914
+          19.8/22.3 | 17.6/xxx | 16.7/xxx
+    TP  |   22.408  |   20.45  | 19.088
+    T1  |   0.945   |   0.899  | 0.857
+    T2  |   0.956   |   0.909  | 0.867
+    T3  |   0.964   |   0.914  | 0.868
 */
 
 /*
@@ -75,7 +75,7 @@ public:
 
 
     ////// functions //////
-    void Init(void);
+    EOsResult Init(void);
     EOsResult ConversionComplete(void);
     void Start(u16*);
     void Start(void);

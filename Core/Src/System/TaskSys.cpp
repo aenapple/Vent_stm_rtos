@@ -116,7 +116,8 @@ void TTaskSys::Run(void)
         //this->Led.Led1_off();
         //continue;
         
-		/*if(this->EventGroup.WaitAndBits(TASK_SYS_EVENT_5SECONDS, 1000) == OsResult_Timeout)
+		
+        /*if(this->EventGroup.WaitAndBits(TASK_SYS_EVENT_5SECONDS, 1000) == OsResult_Timeout)
 		{
 			continue;
 		}*/
@@ -160,7 +161,8 @@ void TTaskSys::Run(void)
         
         float curTemperature;
         curTemperature = (this->Adc.ReadT1() + this->Adc.ReadT2() + this->Adc.ReadT3()) / 3;
-        if(curTemperature > this->prevTemperature)
+        this->Eeprom.WriteLogTemperature((u8)(curTemperature * 23));
+        if(curTemperature > (this->prevTemperature + 0.1))
         {
             if(this->prevTemperature < 1.0)  // ~ 23 C
             {
@@ -249,6 +251,7 @@ EOsResult TTaskSys::Init(void)
 {
 	this->Adc.Init();
     this->Led.Init();
+    this->Eeprom.Init();
     
     //this->adcConvCounter = 0;
     this->prevTemperature = 1;  // ~23 C

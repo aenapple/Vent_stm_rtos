@@ -20,12 +20,14 @@ extern ADC_HandleTypeDef hadc;
 *
 *  @return void .
 */
-void TAdc::Init(void)
+EOsResult TAdc::Init(void)
 {
     HAL_GPIO_WritePin(VIN_CONTROL_GPIO_Port, VIN_CONTROL_Pin, GPIO_PIN_RESET);
     this->TSensorOff();
     this->Calibrate();
     this->convCounter = 0;
+    
+    return(OsResult_Ok);
 }
 //=== end Init =====================================================================
 

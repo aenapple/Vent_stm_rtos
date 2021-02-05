@@ -15,6 +15,7 @@
 #include "..\HardDrivers\Adc.hpp"
 #include "..\HardDrivers\Led.hpp"
 #include "..\HardDrivers\Motor.hpp"
+#include "..\HardDrivers\Eeprom.hpp"
 
 /**********************************************************************************/
 //#define TASK_SYS_EVENT_TICK      (1<<0)  // tick 1 mSec
@@ -67,6 +68,8 @@ private:
     TAdc Adc;
     TLed Led;
     TMotor Motor;
+    TEeprom Eeprom;
+    
     
     volatile u64 systemCounter;
     float prevTemperature;
@@ -77,6 +80,8 @@ private:
     float tmpFloat[10];
     volatile u64 tmpCounter1;
     volatile u64 tmpCounter2;
+    u8 tmpByte[10];
+    u16 tmpShort;
     // DEBUG
 
 	
